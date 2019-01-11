@@ -1,0 +1,45 @@
+version: '3.7'
+services:
+  lamp-web:
+    container_name: lamp-web
+    build: ./build/web
+    restart: always
+    ports:
+      - 80:80
+      - 8080:8080
+    volumes:
+      - ./data/web/htdocs:/var/www/html
+      - ./data/jenkins:/var/lib/jenkins
+      - ./build/web/sql:/dump
+      - ./build/web/apache/conf:/etc/httpd/conf
+      - ./build/web/apache/conf.d:/etc/httpd/conf.d
+    depends_on:
+      - lamp-db
+    tty: true
+    privileged: true
+    stdin_open: true
+    command: /sbin/init
+
+  lamp-db:
+    container_name: lamp-db
+    build: ./build/db
+    ports:
+      - 3306:3306
+    env_file: .env
+    privileged: true
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    volumes:
+      - ./data/db:/var/lib/mysql
+
+  lamp-pma:
+    container_name: lamp-pma
+    image: phpmyadmin/phpmyadmin:4.8
+    restart: always
+    ports:
+      - 8000:80
+    env_file: .env
+    links:
+      - lamp-db
+    volumes:
+      - ./data/pma:/sessions
