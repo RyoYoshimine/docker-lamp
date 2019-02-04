@@ -1,0 +1,51 @@
+version: '3.7'
+services:
+  lamp-web:
+    container_name: lamp-web
+    image: "gnat42/centos7-php73:latest"
+    ports:
+      - 85:80
+    volumes:
+      - "./htdocs:/var/www/html"
+      - "./conf/apache/conf:/etc/httpd/conf"
+      - "./conf/apache/conf.d:/etc/httpd/conf.d"
+    restart: always
+    depends_on:
+      - lamp-db
+    command: /bin/bash
+    stdin_open: true
+    tty: true
+    privileged: true
+
+  lamp-db:
+    container_name: lamp-db
+    image: "mysql:5.6"
+    ports:
+      - 3302:3306
+    volumes:
+      - "./data/db:/var/lib/mysql"
+      - "./conf/db/conf.d:/etc/mysql/conf.d"
+    env_file: ./conf/.env
+    restart: always
+    privileged: true
+
+  lamp-pma:
+    container_name: lamp-pma
+    image: phpmyadmin/phpmyadmin:4.8
+    restart: always
+    ports:
+      - 88:80
+    env_file: ./conf/.env
+    links:
+      - lamp-db
+    volumes:
+      - ./data/pma:/sessions
+
+  lamp-jenkins:
+    container_name: lamp-jenkins
+    image: jenkinsci/jenkins
+    ports:
+      - 8800:8080
+    volumes:
+      - ./data/jenkins:/var/jenkins_home
+    restart: always

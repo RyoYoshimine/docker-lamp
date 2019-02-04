@@ -1,0 +1,26 @@
+Started at Thu Jan 31 10:19:57 UTC 2019
+Finished at Thu Jan 31 10:19:57 UTC 2019. 99ms
+Started at Fri Feb 01 10:19:56 UTC 2019
+FATAL: Remote host closed connection during handshake
+java.io.EOFException: SSL peer shut down incorrectly
+	at sun.security.ssl.InputRecord.read(InputRecord.java:505)
+	at sun.security.ssl.SSLSocketImpl.readRecord(SSLSocketImpl.java:983)
+Caused: javax.net.ssl.SSLHandshakeException: Remote host closed connection during handshake
+	at sun.security.ssl.SSLSocketImpl.readRecord(SSLSocketImpl.java:1002)
+	at sun.security.ssl.SSLSocketImpl.performInitialHandshake(SSLSocketImpl.java:1385)
+	at sun.security.ssl.SSLSocketImpl.startHandshake(SSLSocketImpl.java:1413)
+	at sun.security.ssl.SSLSocketImpl.startHandshake(SSLSocketImpl.java:1397)
+	at sun.net.www.protocol.https.HttpsClient.afterConnect(HttpsClient.java:559)
+	at sun.net.www.protocol.https.AbstractDelegateHttpsURLConnection.connect(AbstractDelegateHttpsURLConnection.java:185)
+	at sun.net.www.protocol.http.HttpURLConnection.followRedirect0(HttpURLConnection.java:2729)
+	at sun.net.www.protocol.http.HttpURLConnection.followRedirect(HttpURLConnection.java:2641)
+	at sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1824)
+	at sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1492)
+	at sun.net.www.protocol.https.HttpsURLConnectionImpl.getInputStream(HttpsURLConnectionImpl.java:263)
+	at hudson.model.DownloadService.loadJSON(DownloadService.java:167)
+	at hudson.model.UpdateSite.updateDirectlyNow(UpdateSite.java:186)
+	at hudson.PluginManager.doCheckUpdatesServer(PluginManager.java:1659)
+	at jenkins.model.DownloadSettings$DailyCheck.execute(DownloadSettings.java:130)
+	at hudson.model.AsyncPeriodicWork$1.run(AsyncPeriodicWork.java:101)
+	at java.lang.Thread.run(Thread.java:748)
+Finished at Fri Feb 01 10:20:53 UTC 2019. 56117ms

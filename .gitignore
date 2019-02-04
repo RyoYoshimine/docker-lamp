@@ -1,3 +1,4 @@
 .DS_Store
 .history
 .vscode
+docker-lamp2/data/db
